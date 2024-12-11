@@ -97,6 +97,11 @@ const Login=()=> {
               {loading ? <HashLoader size={25} color="#fff"/>  :'Login'}
             </button>
           </div>
+          <div className="mt-7">
+            <button className="w-full bg-red-600 text-white text-[18px] leading-[30px] rounded-lg px-4 py-3">
+              {loading ? <HashLoader size={25} color="#fff"/>  :'Login with Google '}
+            </button>
+          </div>
 
           <p className="mt-5 text-textColor text-center">
             Don&apos;t have an account? 

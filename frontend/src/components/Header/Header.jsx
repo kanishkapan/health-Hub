@@ -15,6 +15,10 @@ const navLinks =[
     display :'Find a Doctor' 
   },
   {
+    path: '/payment',
+    display: 'Payment', // New link for payment
+  },
+  {
      path:'/services',
      display:'Services'
   },

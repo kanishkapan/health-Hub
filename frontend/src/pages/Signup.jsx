@@ -186,6 +186,16 @@ const Signup = () => {
             </button>
           </div>
 
+            <div className="mt-7">
+            <button 
+            disabled={loading && true}
+            type='submit'
+            className="w-full bg-red-600 text-white text-[18px] leading-[30px] rounded-lg px-4 py-3">
+              { loading ? 
+               <HashRouter size={35} color="#ffffff"/> :'SignUp With Google'}
+            </button>
+          </div>
+
           <p className="mt-5 text-textColor text-center">
             Already have an account? 
             <Link to='/login' className="text-primaryColor font-medium ml-1">

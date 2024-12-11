@@ -11,6 +11,7 @@ import Dashboard from '../Dashboard/doctor-account/Dashboard'
 import CheckoutSuccess from '../pages/CheckoutSuccess'
 import {Routes,Route} from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
+import CheckoutForm from '../components/payment/Checkout'
 
 const Routers=()=> {
   return  (
@@ -23,7 +24,7 @@ const Routers=()=> {
     <Route path="/register" element={<Signup/>} />
     <Route path="/contact" element={<Contact/>} />
     <Route path="/services" element={<Services/>} /> 
-    <Route path="/checkout-success" element={<CheckoutSuccess/>} /> 
+    <Route path="/checkout" element={<CheckoutForm/>} /> 
     <Route
      path="/users/profile/me" 
      element={<ProtectedRoute allowedRoles={['patient']}>
