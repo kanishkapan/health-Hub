@@ -1,58 +1,49 @@
-/* eslint-disable react/prop-types */
-import starIcon from '../../assets/images/Star.png'
-import { Link } from 'react-router-dom';
-import { BsArrowRight } from 'react-icons/bs';
+import React from "react";
+import starIcon from "../../assets/images/Star.png"; // Ensure this image exists in your project.
+import { Link } from "react-router-dom";
+import { BsArrowRight } from "react-icons/bs";
 
+const DoctorCard = ({ doctor }) => {
+  const {
+    name,
+    avgRating = "N/A",
+    totalRating = "0",
+    photo,
+    specialization = "General Practitioner",
+    experiences = [],
+  } = doctor;
 
- const DoctorCard= ({doctor}) => {
-        const {
-         name,
-         avgRating,
-         totalRating,
-         photo,
-         specialization,
-         experiences
-    } = doctor;
   return (
-    <div className="p-3 lg:p-5">
-        <div>
-            <img src={photo} className="w-full" alt="" />
+    <div className="bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105">
+      <img
+        src={photo || "https://via.placeholder.com/150"}
+        className="w-full h-48 object-cover"
+        alt={name}
+      />
+      <div className="p-4">
+        <h2 className="text-lg font-bold text-gray-800">{name}</h2>
+        <div className="mt-2 flex items-center justify-between">
+          <span className="bg-blue-100 text-blue-600 py-1 px-3 rounded text-sm font-medium">
+            {specialization}
+          </span>
+          <div className="flex items-center gap-1 text-gray-600 text-sm">
+            <img src={starIcon} alt="Star" className="w-4 h-4" />
+            <span>{avgRating}</span>
+            <span>({totalRating})</span>
+          </div>
         </div>
-        <h2 className="text-[18px] leading-[30px] lg:text-headingColor font-[700] mt-3 lg:mt-5">
-            {name}
-        </h2>
-
-        <div className="mt-2 lg:mt-4 flex items-center justify-between">
-            <span className='bg-{#CCF0F3} text-irisBlueColor py-1 px-2 lg:py-2 lg:px-6 text-[12px] leading-4 lg:text-[16px] lg:leading-7 font-semibold rounded'>
-                {specialization}
-            </span>
-
-            <div className="flex items-center gap-[6px]">
-                <span className="flex items-center gap-[6px] text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
-                    <img src={starIcon} alt="" />{avgRating}
-                </span>
-                <span className='text-[14px] leading-6 lg:text-[16px] lg:leading-7 font-[400] text-tectColor'>({totalRating})</span>
-            </div>
-        </div>
-
-        <div className='mt-[18px] lg:mt-5 flex items-center justify-between'>
-            <div>
-                {/* <h3 className="text-[16px] leading-7 lg:text-[18px] lg:leading-[30px] font-semibold text-headingColor">
-                    +{totalPatient} patients
-                </h3> */}
-                <p className='text-[14px] leading-6 font-[400] text-textColor'>
-                    At {experiences && experiences[0]?.hospital}
-                </p>
-            </div>
-
-            <Link 
-            to={`/doctors/${doctor._id}`}
-            className='w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto
-            flex item-center justify-center group hover:bg-primaryColor hover:border-none'
-            >
-                <BsArrowRight className='group-hover:text-white w-6 h-5'/>
-            </Link>
-        </div>   
+        <p className="mt-2 text-sm text-gray-600">
+          {experiences.length > 0
+            ? `At ${experiences[0]?.hospital}`
+            : "Experience not available"}
+        </p>
+        <Link
+          to={`/doctors/${doctor._id}`}
+          className="mt-4 inline-block w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition"
+        >
+          <BsArrowRight className="w-5 h-5" />
+        </Link>
+      </div>
     </div>
   );
 };
