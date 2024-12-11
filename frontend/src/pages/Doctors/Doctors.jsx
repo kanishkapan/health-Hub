@@ -1,88 +1,147 @@
-import DoctorCard from '../../components/Doctors/DoctorCard';
-// import {doctors} from '../../assets/data/doctors';
-import Testimonial from '../../components/Testimonial/Testimonial';
-import {BASE_URL} from './../../config'
-import useFetchData from './../../hooks/useFetchData'
-import Loader from '../../components/Loader/Loading'
-import Error from '../../components/Error/Error'
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import DoctorCard from '../../components/Doctors/DoctorCard'; // Adjust the import path as necessary
+const doctorsData = [
+  {
+    id: 1,
+    name: 'Dr. John Doe',
+    specialization: 'Cardiologist',
+    rating: 4.5,
+    totalRatings: 120,
+    availableTimings: '9:00 AM - 5:00 PM',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 2,
+    name: 'Dr. Jane Smith',
+    specialization: 'Dermatologist',
+    rating: 4.7,
+    totalRatings: 98,
+    availableTimings: '10:00 AM - 6:00 PM',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 3,
+    name: 'Dr. Emily Johnson',
+    specialization: 'Neurologist',
+    rating: 4.8,
+    totalRatings: 150,
+    availableTimings: '8:00 AM - 4:00 PM',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 4,
+    name: 'Dr. Michael Brown',
+    specialization: 'Pediatrician',
+    rating: 4.6,
+    totalRatings: 110,
+    availableTimings: '11:00 AM - 7:00 PM',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 5,
+    name: 'Dr. Sarah Davis',
+    specialization: 'Gastroenterologist',
+    rating: 4.4,
+    totalRatings: 95,
+    availableTimings: '7:00 AM - 3:00 PM',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 6,
+    name: 'Dr. William Martinez',
+    specialization: 'Orthopedic Surgeon',
+    rating: 4.9,
+    totalRatings: 130,
+    availableTimings: '9:00 AM - 5:00 PM',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 7,
+    name: 'Dr. Linda Wilson',
+    specialization: 'Endocrinologist',
+    rating: 4.3,
+    totalRatings: 85,
+    availableTimings: '10:00 AM - 6:00 PM',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 8,
+    name: 'Dr. James Taylor',
+    specialization: 'Ophthalmologist',
+    rating: 4.7,
+    totalRatings: 105,
+    availableTimings: '8:00 AM - 4:00 PM',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 9,
+    name: 'Dr. Barbara Moore',
+    specialization: 'Psychiatrist',
+    rating: 4.5,
+    totalRatings: 115,
+    availableTimings: '11:00 AM - 7:00 PM',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 10,
+    name: 'Dr. Robert Anderson',
+    specialization: 'Urologist',
+    rating: 4.6,
+    totalRatings: 90,
+    availableTimings: '7:00 AM - 3:00 PM',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 11,
+    name: 'Dr. Robert Anderson',
+    specialization: 'Urologist',
+    rating: 4.6,
+    totalRatings: 90,
+    availableTimings: '7:00 AM - 3:00 PM',
+    image: 'https://via.placeholder.com/150',
+  },
+  {
+    id: 12,
+    name: 'Dr. Robert Anderson',
+    specialization: 'Urologist',
+    rating: 4.6,
+    totalRatings: 90,
+    availableTimings: '7:00 AM - 3:00 PM',
+    image: 'https://via.placeholder.com/150',
+  },
+];
 
-const Doctors=()=> {
-  const [query,setQuery]=useState(" ")
-  const [debounceQuery,setDebounceQuery]=useState("");
+const Doctors = () => {
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearch =()=>{
-    setQuery(query.trim());
-    console.log("handle serach");
-  }
-  useEffect(()=>{
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
-    const timeout = setTimeout(()=>{
-      setDebounceQuery(query)
-    },700)
-
-    return ()=> clearTimeout(timeout)
-  },[query])
-
-  const {
-    data:doctors,
-    loading,
-    error,
-  }=useFetchData(`${BASE_URL}/doctors?query=${debounceQuery}`);
-
+  const filteredDoctors = doctorsData.filter((doctor) =>
+    doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    doctor.specialization.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-  <>
-  <section className='bg-[#fff9ea]'>
-    <div className="container text-center">
-      <h2 className="heading">Find a Doctor</h2>
-      <div className="max-w-[570px] mt-[30px] mx-auto bg-[#0066ff2c] rounded-md flex items-center
-      justify-between">
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-bold text-center mb-4">Find a Doctor</h2>
+      <div className="max-w-md mx-auto mb-6">
         <input
-         type="search"
-         className='py-4 pl-4 pr-2 bg-transparent w-full focus:outline-none cursor-pointer
-         placeholder:text-textColor'
-         placeholder='Search Doctor'
-         value={query}
-         onChange={e=>setQuery(e.target.value)} 
-         />
-         <button className='btn mt-0 rounded-[10px] rounded-r-md'
-         onClick={handleSearch} >
-          Search
-          </button>
+          type="text"
+          placeholder="Search by name or specialization"
+          value={searchTerm}
+          onChange={handleSearch}
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </div>
-    </div>
-  </section>
-
-   <section>
-    <div className="container">
-      {loading && <Loader/>}
-      {error && <Error/>}
-      {!loading && !error && (
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-[30px] mt-[30px] lg:mt-
-        [55px]'>
-        {doctors.map(doctor=>(
-            <DoctorCard key={doctor.id} doctor={doctor} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {filteredDoctors.map((doctor) => (
+          <DoctorCard key={doctor.id} doctor={doctor} />
         ))}
-        </div>  
-      )} 
-    </div>
-  </section>
-     
-  <section>
-      <div className="container">
-      <div className="xl:w-[470px] mx-auto">
-          <h2 className="heading text-center">  What our patients say</h2>
-          <p className='text__para text-center'>
-             World-class care for everyone.Our health System offers unmatched,expert health care.
-          </p>
-        </div>
-        <Testimonial/>
       </div>
-    </section> 
-
-  </>
+    </div>
   );
 };
 
-export default Doctors
+export default Doctors;
